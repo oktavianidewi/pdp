@@ -15,7 +15,8 @@ userRepo = UserRepo(store)
 
 """
 1. Why the type of store is Store and not Memstore?
-store is the initialization of Memstore
+I am not so clear about this part, which 'Store' is referring to?
+'store' here is the instance of Memstore, which is passed to the repository functions as a parameter.
 
 2. What design patterns do you recognize here?
 It is a Facade design pattern. Becouse it provides a simple main function wrapping a set of functions behind.
