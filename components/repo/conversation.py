@@ -1,27 +1,17 @@
-"""
-1) bikin dulu secara terpisah, tidak ada pengecekan ke userid
-2) kalau semua method udah bisa, baru bikin pengecekan is_exist userid, supaya data conversation punya userid
-
-"""
 import datetime
 import json
 import string
 import random
 
-class Conversation:
-    def __init__(self, id, user_id, direction, message):
-        if not id :
-            # generate id data['conversation_id']
-            self.id = str(self.id_generator())
-        else:
-            self.id = str(id)
-
-        self.user_id = str(user_id)
+class Conversation(object):
+    def __init__(self, user_id, direction, message):
+        self.id = self.string_id_generator()
+        self.user_id = user_id
         self.direction = direction
         self.message = message
         self.timestamp = datetime.datetime.now().strftime('%s')
 
-    def id_generator(self, size=6, chars=string.ascii_uppercase + string.digits):
+    def string_id_generator(self, size=6, chars=string.ascii_uppercase + string.digits):
         return ''.join(random.choice(chars) for _ in range(size))
 
     def content_update(self):
@@ -46,3 +36,7 @@ class Conversation:
             'message' : self.message,
             'timestamp' : self.timestamp
         })
+
+    def content_generated(self, dict_conversation):
+        dict_conversation['id'] = self.string_id_generator()
+        return json.dumps(dict_conversation)

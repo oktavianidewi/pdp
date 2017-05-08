@@ -2,14 +2,24 @@ from flask import Flask, jsonify, abort, request
 from flask_restful import Api
 import json
 
-from crud.repo import Repo
+from dependencyinjection.injector import Injector
+# from crud.repo import Repo
 from crud.conversation import Conversation
 from crud.user import User
+
+# DI initialization
+ijc = Injector()
+repository = ijc.checkingDIserver()
+memstore = ijc.checkingDIrepo()
+
+# init
+repository.cacheDI(memstore)
 
 app = Flask(__name__)
 api = Api(app)
 
-repository = Repo()
+# repository = Repo()
+
 
 # REST interface to be implemented
 @app.route('/conversations', methods=['POST'])
@@ -18,7 +28,7 @@ def create_conversation():
     if not data:
         abort(404)
 
-    # init conversation
+    # init
     conversation = Conversation(data['id'], data['user_id'], data['direction'], data['message'])
     result = repository.create(conversation.content())
 
@@ -26,6 +36,7 @@ def create_conversation():
 
 @app.route('/conversations/<string:id>', methods=['GET'])
 def get_conversation(id):
+    repository.cacheDI(memstore)
     get_datum = repository.get(id)
     if not get_datum:
         abort(404)
@@ -110,7 +121,3 @@ def update_user(id):
 def delete_user(id):
     result = repository.remove(id)
     return jsonify({'user':result}), 200
-
-@app.route('/')
-def main():
-    return 'Task 1'

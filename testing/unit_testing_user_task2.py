@@ -1,4 +1,4 @@
-from main import app
+from main_task2 import app
 import unittest
 import json
 

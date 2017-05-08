@@ -1,8 +1,8 @@
-from main import app
+from main_task2 import app
 import unittest
 import json
 
-class Conversation_test(unittest.TestCase):
+class Conversation_test_task2(unittest.TestCase):
 
     def setUp(self):
         self.app = app.test_client(self)

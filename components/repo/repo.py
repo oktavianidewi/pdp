@@ -1,14 +1,11 @@
-from memStore import MemStore
-
-class Repo():
-    def __init__(self):
-        self.cache = MemStore()
+class Repo(object):
+    def __init__(self, mem_store):
+        self.cache = mem_store
 
     def response_message(self, response, data):
         return {'data': data, 'response':response}
 
     def create(self, data):
-        print "isi data ... ", data
         try:
             insert = self.cache.store(data)
             result = self.response_message(True, data)
@@ -59,7 +56,6 @@ class Repo():
 
     def update(self, id, updated_data):
         """ """
-        print 'nilai id ', id
         idx = self.cache.idtoidx(id)
 
         if idx is not None:
