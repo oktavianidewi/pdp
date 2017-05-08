@@ -1,0 +1,53 @@
+{
+    "components": {
+        "store" : {
+            "file" : "components/store/memStore.py",
+            "dependencies" : []
+        },
+
+        "Repo" : {
+            "file" : "components/repo/repo.py",
+            "dependencies" : ["store"]
+        },
+
+        "convRepo" : {
+            "file" : "components/repo/genericRepo.py",
+            "dependencies" : ["store"],
+            "options" : {
+              "schema":{
+                "user_id" : "int",
+                "direction" : "string",
+                "message" : "string",
+                "timestamp" : "int"
+              }
+            }
+        },
+        "userRepo" : {
+            "file" : "components/repo/genericRepo.py",
+            "dependencies" : ["store"],
+            "options" : {
+              "schema":{
+                "name" : "string",
+                "gender" : "string",
+                "city" : "string",
+                "phone" : "string",
+                "email" : "string"
+              }
+            }
+        },
+
+        "server" : {
+            "file" : "main.py",
+            "dependencies" : ["convUserRepo"],
+            "options" : {
+              "routes":["/conversations", "/users"]
+            }
+        }
+    },
+
+    "main" : {
+        "component" : "server",
+        "method" : "start",
+        "args" : [5000]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "components": {
+        "store" : {
+            "file" : "components/store/memStore.py",
+            "dependencies" : []
+        },
+
+        "Repo" : {
+            "file" : "components/repo/repo.py",
+            "dependencies" : ["store"]
+        },
+
+        "convRepo" : {
+            "file" : "components/repo/conversationRepo.py",
+            "dependencies" : ["store"]
+        },
+        "userRepo" : {
+            "file" : "components/repo/userRepo.py",
+            "dependencies" : ["store"]
+        },
+
+        "server" : {
+            "file" : "main.py",
+            "dependencies" : ["convRepo", "userRepo"]
+        }
+    },
+
+    "main" : {
+        "component" : "server",
+        "method" : "start",
+        "args" : [5000]
+    }
+}
